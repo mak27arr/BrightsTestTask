@@ -1,12 +1,30 @@
-﻿@model IEnumerable<BrightsTestTask.Models.Statistic>
+﻿@model BrightsTestTask.Models.ViewModel<Statistic>
 @{
     ViewData["Title"] = "Statistic";
 }
 <h1>@ViewData["Title"]</h1>
 <table class="table">
     <tr><td>Date</td><td>URL</td><td>Status code</td><td>Title</td></tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.Statistics)
     {
         <tr><td>@item.RequestDate</td><td>@item.Url?.UrlName</td><td>@item.ResponseCode</td><td>@item.Title</td></tr>
     }
 </table>
+@if (Model.PageViewModel.HasPreviousPage)
+{
+<a asp-action="Statistic"
+   asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+   class="btn btn-outline-dark">
+    <i class="glyphicon glyphicon-chevron-left"></i>
+    Previous
+</a>
+}
+@if (Model.PageViewModel.HasNextPage)
+{
+    <a asp-action="Statistic"
+       asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+       class="btn btn-outline-dark">
+        Next
+        <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+}

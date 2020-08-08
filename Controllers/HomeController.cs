@@ -30,9 +30,19 @@ namespace BrightsTestTask.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Statistic()
+        public async Task<IActionResult> Statistic(int page = 1)
         {
-            return View(await db.Statistics.Include(x=>x.Url).ToListAsync());
+            int pageSize = 15;   
+            IQueryable<Statistic> source = db.Statistics.Include(x => x.Url);
+            var count = await source.CountAsync();
+            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            ViewModel<Statistic> viewModel = new ViewModel<Statistic>
+            {
+                PageViewModel = pageViewModel,
+                Statistics = items
+            };
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
