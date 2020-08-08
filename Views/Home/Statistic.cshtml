@@ -1,0 +1,12 @@
+﻿@model IEnumerable<BrightsTestTask.Models.Statistic>
+@{
+    ViewData["Title"] = "Statistic";
+}
+<h1>@ViewData["Title"]</h1>
+<table class="table">
+    <tr><td>Date</td><td>URL</td><td>Status code</td><td>Title</td></tr>
+    @foreach (var item in Model)
+    {
+        <tr><td>@item.RequestDate</td><td>@item.Url?.UrlName</td><td>@item.ResponseCode</td><td>@item.Title</td></tr>
+    }
+</table>
