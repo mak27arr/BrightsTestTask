@@ -1,49 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<script src="~/js/HomeActionScript.js"></script>
 
-    <script type="text/javascript">
 
-        function makeSearch() {
-            var urlFullStr = $("#input_url_data").val();
-            var urlArray = urlFullStr.split("\n");
-            $("#rezalt").remove();
-            $('#rezalt').after('<tr><td>Date</td><td>URL</td><td>Status code</td><td>Title</td></tr>');
-            urlArray.forEach(function (entry) {
-                $.ajax({
-                    url: 'https://localhost:5001/URLCheker/GetStatistic?urlsString=' + entry,
-                    beforeSend: function (xhr) {
-                        xhr.overrideMimeType("text/plain; charset=x-user-defined");
-                    }
-                })
-                    .done(function (data) {
-                        console.log(data);
-                      $('#rezalt tr:last').after('<tr><td>Date</td><td>URL</td><td>Status code</td><td>Title</td></tr>');
-                });
-            });
-            return false;
-        }
-
-    </script>
-
-    <div class="text-center">
-        <h1 class="display-4">Welcome</h1>
-        <div id="req_form">
-            <form method="post" onsubmit="return makeSearch()">
-                <table class="size100">
-                    <tr>
-                        <td class="textright">URLs:</td>
-                        <td> <textarea id="input_url_data" class="size100 minheight" placeholder="each on a new line"></textarea></td>
-                    </tr><tr>
-                             <td></td>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <div id="req_form">
+        <form method="post" onsubmit="return makeStatistic()">
+            <table class="size100">
+                <tr>
+                    <td class="textright">URLs:</td>
+                    <td> <textarea id="input_url_data" class="size100 minheight" placeholder="each on a new line"></textarea></td>
+                </tr>
+                <tr>
+                    <td></td>
                     <td><input type="submit" class="size50" value="Check" /></td>
-                    </tr>
-                    </table>
-            </form>
-        </div>
-        <div id="rez_part">
-            <table class="table" id="rezalt">
-                <tr><td>Date</td><td>URL</td><td>Status code</td><td>Title</td></tr>
+                </tr>
             </table>
-        </div>
+        </form>
     </div>
+    <div id="rez_part">
+        <table class="table" id="rezalt">
+            <thead>
+                <tr><td>Date</td><td>URL</td><td>Status code</td><td>Title</td></tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
