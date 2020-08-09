@@ -5,7 +5,7 @@
     var url_base = window.location.origin;
     urlArray.forEach(function (entry) {
     $.ajax({
-        url: url_base+'/URLCheker/GetStatistic?urlsString=' + entry,
+        url: url_base +'/api/URLCheker/GetStatisticAsync' + entry,
         beforeSend: function (xhr) {
             xhr.overrideMimeType("text/plain; charset=x-user-defined");
         }

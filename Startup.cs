@@ -30,6 +30,7 @@ namespace BrightsTestTask
             services.AddDbContext<StatisticContext>(options =>
                 options.UseNpgsql(connection));
             services.AddControllersWithViews();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +50,7 @@ namespace BrightsTestTask
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

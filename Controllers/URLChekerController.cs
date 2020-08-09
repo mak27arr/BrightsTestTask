@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BrightsTestTask.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class URLChekerController : ControllerBase
     {
         private StatisticContext db;
@@ -15,7 +17,7 @@ namespace BrightsTestTask.Controllers
         {
             db = context;
         }
-        //[HttpGet("{urlsString}"), Route("GetStatistic")]
+        [HttpGet, Route("GetStatisticAsync")]
         public async Task<ActionResult<string>> GetStatisticAsync(string urlsString)
         {
             Parser parser = new Parser();
