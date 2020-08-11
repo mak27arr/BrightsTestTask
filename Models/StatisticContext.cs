@@ -12,7 +12,7 @@ namespace BrightsTestTask.Models
         public StatisticContext(DbContextOptions<StatisticContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

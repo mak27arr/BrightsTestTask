@@ -35,7 +35,7 @@ namespace BrightsTestTask.Controllers
             int pageSize = 15;   
             IQueryable<Statistic> source = db.Statistics.Include(x => x.Url);
             var count = await source.CountAsync();
-            var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
+            var items = await source.OrderBy(x=>x.Id).Skip((page - 1) * pageSize).Take(pageSize).ToListAsync();
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
             ViewModel<Statistic> viewModel = new ViewModel<Statistic>
             {

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 using BrightsTestTask.Models;
 using BrightsTestTask.URLInfo;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,7 @@ namespace BrightsTestTask.Controllers
             db = context;
         }
         [HttpGet, Route("GetStatisticAsync")]
-        public async Task<ActionResult<string>> GetStatisticAsync(string urlsString)
+        public async Task<JsonResult> GetStatisticAsync(string urlsString)
         {
             Parser parser = new Parser();
             List<string> BadUrl = new List<string>();
@@ -37,7 +38,25 @@ namespace BrightsTestTask.Controllers
             }
             await db.Statistics.AddRangeAsync(url_statistic);
             db.SaveChangesAsync();
-            return Newtonsoft.Json.JsonConvert.SerializeObject(url_statistic);
+            return new JsonResult(url_statistic);
+        }
+        [HttpGet, Route("GetStatisticSingleAsync")]
+        public async Task<JsonResult> GetStatisticSingleAsync(string urlsString)
+        {
+            Validator validator = new Validator();
+            List<string> BadUrl = new List<string>();
+            var url_cheked = validator.CheakURL(urlsString);
+            UrlChecker urlChecker = new UrlChecker();
+            Statistic rezalt = new Statistic();
+            if (url_cheked != null)
+            {
+                var url = db.GetUrl(url_cheked, true);
+                rezalt = await urlChecker.GetUrlInfoAsync(url);
+            }
+
+            await db.Statistics.AddAsync(rezalt);
+            db.SaveChangesAsync();
+            return new JsonResult(rezalt);
         }
     }
 }
